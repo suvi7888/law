@@ -1,0 +1,129 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Front extends CI_Controller {
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('Home_model');
+	}
+
+	public function index()
+	{ 
+		$bahasa = 'EN'; 
+		if (strtoupper(@$_GET['lang']) == 'EN' || strtoupper(@$_GET['lang']) == 'ID')
+			$this->session->set_userdata('SS_LANG', @$_GET['lang']);
+		else if ($this->session->userdata('SS_LANG') == '') 
+			$this->session->set_userdata('SS_LANG', 'EN');
+		
+		$bahasa = $this->session->userdata('SS_LANG');
+
+		$lang = '';
+
+
+		$data = array(
+			'title' 	=> "SERA - Serasi Auto Raya" , 
+			'ov'		=> $this->Home_model->getData('15',"$bahasa"), //overview
+			'carousel'	=> $this->Home_model->menuDetail('12',"$bahasa"), //carousel
+			'our'		=> $this->Home_model->getData('10',"$bahasa"), //carousel
+			'ourtrans'	=> $this->Home_model->getData('16',"$bahasa"), //carousel
+			'ourcar'	=> $this->Home_model->getData('17',"$bahasa"), //carousel
+			'ourlog'	=> $this->Home_model->getData('18',"$bahasa"), //carousel 
+			'csr'		=> $this->Home_model->getData('19',"$bahasa"), // untuk bagian CSR 
+			'karir'		=> $this->Home_model->getData('20',"$bahasa"), // untuk bagian karir
+			'lang'		=> $lang,
+			'addjs'		=> "addJS/home",
+			'news'		=> $this->Home_model->getNews("$bahasa"),
+			'ourvalue'	=> $this->Home_model->menuDetail('25',"$bahasa"), //our value
+			);
+
+		$this->output->cache(5);
+		$this->load->view('header_front', $data, FALSE);	
+		$this->load->view('showcase_front', $data, FALSE);	
+		$this->load->view('footer_front', $data, FALSE);		
+	}
+
+
+	public function cookies()
+	{
+
+		$data = array(
+			'title' 	=> "Cookies - Serasi Auto Raya" , 
+			);
+
+		$bahasa = 'EN'; 
+		if (strtoupper(@$_GET['lang']) == 'EN' || strtoupper(@$_GET['lang']) == 'ID')
+			$this->session->set_userdata('SS_LANG', @$_GET['lang']);
+		else if ($this->session->userdata('SS_LANG') == '') 
+			$this->session->set_userdata('SS_LANG', 'EN');
+		
+		$bahasa = $this->session->userdata('SS_LANG');
+
+		$lang = '';
+
+		$this->load->view('header_front', $data, FALSE);	
+		$this->load->view('Footer/cookies_front', $data, FALSE);	
+		$this->load->view('footer_front', $data, FALSE);	
+	}
+
+
+
+	public function privacy()
+	{
+
+		$data = array(
+			'title' 	=> "Privacy - Serasi Auto Raya" , 
+			);
+
+		$bahasa = 'EN'; 
+		if (strtoupper(@$_GET['lang']) == 'EN' || strtoupper(@$_GET['lang']) == 'ID')
+			$this->session->set_userdata('SS_LANG', @$_GET['lang']);
+		else if ($this->session->userdata('SS_LANG') == '') 
+			$this->session->set_userdata('SS_LANG', 'EN');
+		
+		$bahasa = $this->session->userdata('SS_LANG');
+
+		$lang = '';
+
+		$this->load->view('header_front', $data, FALSE);	
+		$this->load->view('Footer/cookies_front', $data, FALSE);	
+		$this->load->view('footer_front', $data, FALSE);	
+	}
+
+
+
+	public function notfound() 
+	{
+ 
+
+		$this->load->view('404front');	 
+	}
+	
+	public function site_map()
+	{ 
+		$bahasa = 'EN'; 
+		if (strtoupper(@$_GET['lang']) == 'EN' || strtoupper(@$_GET['lang']) == 'ID')
+			$this->session->set_userdata('SS_LANG', @$_GET['lang']);
+		else if ($this->session->userdata('SS_LANG') == '') 
+			$this->session->set_userdata('SS_LANG', 'EN');
+		
+		$bahasa = $this->session->userdata('SS_LANG');
+
+		$lang = '';
+
+
+		$data = array(
+			'title' 	=> "SERA - Serasi Auto Raya" , 
+			'news'		=> $this->Home_model->getNewsMedia("$bahasa",4),
+			'info'		=> $this->Home_model->getNewsMedia("$bahasa",5),
+			);
+		$this->load->view('header_front', $data, FALSE);	
+		$this->load->view('Footer/site_map', $data, FALSE);
+		$this->load->view('footer_front', $data, FALSE);		
+	}
+
+}
+
+/* End of file Front.php */
+/* Location: ./application/modules/front/controllers/Front.php */

@@ -1,0 +1,176 @@
+<?php 
+$no=0;
+$tahun = array();
+foreach($allContent as $row){ 
+	if ($no > 0){
+		$title = $row['title'];
+		if (!in_array($title, $tahun)) {
+			$tahun[] = $title;
+		}
+		$allGambar[$title] = $row;
+	}
+	$no++;
+}
+asort($tahun);
+foreach($tahun as $key => $val)
+	$allTahun[] = $val;
+
+?>
+
+
+<?php if (!$this->agent->is_mobile()) { ?>
+
+<header>
+	<div class="fs-slider">
+		<div id="fs-slider-nav" class="carousel slide carousel-fade scale" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="active item bg" style="background-image:url(<?php echo base_url("uploads/contents/".$allContent[0]['photo']);?>)">
+					<div class="hero-caption caption-left caption-height-center">
+						<!-- <h2 class="hero-heading-alt ls-1 lh-1-5 hero-divider-left text-white">Welcome to <span class="hero-heading">SERA</span></h2> -->
+					</div>
+					<!--/ hero-caption -->
+				</div>
+				<!-- /item -->
+
+				<a href="#history" class="tohash scroll-to"><i class="ti-angle-down"></i> </a>
+			</div>
+			<!-- /carousel-inner -->
+
+		</div>
+		<!-- /carousel -->
+	</div>
+	<!-- /fs-slider -->
+</header>
+<!--/#Full Screen Slider -->
+<?php } ?>
+
+<!-- Heading Style 1 -->
+<section class="header">
+	<div id="first" class="block-second-menu menu col-md-12 hidden-xs hidden-sm">
+		<div class="breadcrumb pull-left mrg-top-10">
+			<ul>
+				<li><a href="<?php echo site_url('profile'); ?>"><b>Profile</b></a></li>
+			</ul>
+		</div>
+		<!-- /pull-left -->
+		<div class="breadcrumb pull-right mrg-top-10">
+			<ul>
+				<?php foreach($submenu as $row){ ?>
+				<li><a class="<?php echo $row['slug'] == 'profile-'.$activeMenu ? 'active' : ''; ?>" href="<?php echo site_url($row['slug']) ?>"><?php echo $row['menu_detail_name']; ?></a></li>
+				<?php } ?>
+			</ul>
+		</div>
+		<!-- /breadcrumb -->
+	</div>
+	<div class="menu-mobile hidden-lg hidden-md">
+		<ul class="nav navbar-nav">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">PROFILE &nbsp;<span class="glyphicon glyphicon-chevron-down pull-right"></span></a>
+				<ul class="dropdown-menu">
+					<?php foreach($submenu as $row){ ?>
+					<li class="">
+
+						<a  href="<?php echo site_url($row['slug']) ?>">
+							<?php echo $row['slug'] == 'profile-'.$activeMenu ? '<span class="glyphicon glyphicon-chevron-right"></span>' : ''; ?>
+
+							<?php echo $row['menu_detail_name']; ?></a></li>
+							<li class="divider"></li>
+							<?php } ?>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+			<!-- /container -->
+		</section>
+		<!-- /Heading Style 1 --> 
+
+		<!-- Contact -->
+		<section id="history" class="profile pdd-vertical-kosong">
+			<div class="carousel slide vertical" id="carousel-vertical" data-ride="carousel">
+				<div class="slider-navigation-white"></div>
+				<ol class="carousel-indicators">
+
+
+					<?php for($i=0; $i<count($allTahun); $i++){ ?>
+					<li data-target="#carousel-vertical" data-slide-to="<?php echo ($i); ?>" <?php echo $i==0?'class="active"':''; ?>></li>
+					<?php } ?>
+
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<?php 
+					if ($this->agent->is_mobil()) { $var = 'photo_litle'; } else { $var = 'photo'; }
+		
+
+					for($i=0; $i<count($allTahun); $i++){ $row = $allGambar[$allTahun[$i]]; ?>
+
+
+
+					<div class="item <?php echo $i==0?'active':''; ?>" style="background-image:url(<?php echo base_url("uploads/contents/".$row[$var]);?>)">
+						<div class="col-md-5">
+							<div class="block-content-history pdd-horizon-50 pdd-vertical-75" align="left">
+								<h3 class="hero-heading text-purple"><?php echo $row['title']; ?></h3>
+								<h4 class="text-dark"><?php echo $row['content']; ?></h4>
+							</div>
+						</div>
+						<div class="col-md-7"></div>
+					</div>
+					<?php } ?>
+					<?php $no=0; foreach($allContent as $row){ if ($no > 0){ ?>
+					<?php } $no++; } ?>
+				</div>
+			</div>
+		</section>
+		<!-- /Contact -->
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var delta = 0;
+				var scrollThreshold = 5;
+
+		// detect available wheel event
+		wheelEvent = "onwheel" in document.createElement("div") ? "wheel" : // Modern browsers support "wheel"
+			document.onmousewheel !== undefined ? "mousewheel" : // Webkit and IE support at least "mousewheel"
+			"DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+
+		// Bind event handler
+		$(window).on(wheelEvent, function(e) {
+			// Do nothing if we weren't scrolling the carousel
+			var carousel = $('.carousel.vertical:hover');
+			if (carousel.length === 0) return;
+
+			// Get the scroll position of the current slide
+			var currentSlide = $(e.target).closest('.item')
+			var scrollPosition = currentSlide.scrollTop();
+
+			// --- Scrolling up ---
+			if (e.originalEvent.detail < 0 || e.originalEvent.deltaY < 0 || e.originalEvent.wheelDelta > 0) {
+				// Do nothing if the current slide is not at the scroll top
+				if (scrollPosition !== 0) return;
+
+				delta--;
+
+				if (Math.abs(delta) >= scrollThreshold) {
+					delta = 0;
+					carousel.carousel('prev');
+				}
+			}
+
+			// --- Scrolling down ---
+			else {
+				// Do nothing if the current slide is not at the scroll bottom
+				var contentHeight = currentSlide.find('> .content').outerHeight();
+				if (contentHeight > currentSlide.outerHeight() && scrollPosition + currentSlide.outerHeight() !== contentHeight) return;
+
+				delta++;
+				if (delta >= scrollThreshold) {
+					delta = 0;
+					carousel.carousel('next');
+				}
+			}
+
+			// Prevent page from scrolling
+			return false;
+		});
+	})
+</script>
