@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	<script>base_url='<?php echo base_url(); ?>';</script>
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="<?php echo base_url('assets/assets_frontend/images/logo/icon.png'); ?>">
+    <link rel="shortcut icon" href="<?php echo base_url('assets/assets_frontend/images/logo/myIcon.png'); ?>">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">

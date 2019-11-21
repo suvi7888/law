@@ -123,7 +123,7 @@ class Kantor extends CI_Controller {
 		
 		$detail = $this->Kantor_model->detailKantor($id);
 		$data['listGrup'] = $this->Kantor_model->grupKantor();
-		$data['title'] = 'Edit Kantor';
+		$data['title'] = $asd;
 		$data['detail'] = $detail;
 		$data['action'] = 'back/kantor/edit/'.$id;
 		// $data = array(

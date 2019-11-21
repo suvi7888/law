@@ -38,7 +38,6 @@ class Setting extends CI_Controller {
 		}
 		## END Cek Hak Akses
 		###############################
-
 	}
 
 
@@ -48,7 +47,7 @@ class Setting extends CI_Controller {
 
 		$data = array(
 			'title' 	=> 'Google Analytics', 
-			'ga'		=> $this->Settings_model->getGA()
+			'ga'		=> $this->Settings_model->getGA(),
 			);
 
 
@@ -92,7 +91,7 @@ class Setting extends CI_Controller {
 			'in'		=> $this->Settings_model->sosmed('sosmed_in'),
 			'fb'		=> $this->Settings_model->sosmed('sosmed_fb'),
 			'twitter'	=> $this->Settings_model->sosmed('sosmed_twitter'),
-			'google'	=> $this->Settings_model->sosmed('sosmed_google')
+			'google'	=> $this->Settings_model->sosmed('sosmed_google'),
 
 			);
 

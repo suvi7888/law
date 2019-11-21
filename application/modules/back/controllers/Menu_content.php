@@ -9,8 +9,8 @@ class Menu_content extends CI_Controller {
 		$this->load->library(array('ion_auth','form_validation','pagination'));
 		$this->load->helper(array('url','language'));
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-		$this->lang->load('auth');
-		
+		$this->lang->load('auth'); 
+		$this->load->helper('slug_helper');
 		$this->load->model('Language_model'); 
 		$this->load->model('Menu_model');
 		$this->load->model('Menu_detail_model');
@@ -34,20 +34,18 @@ class Menu_content extends CI_Controller {
 		}
 		## END Cek Hak Akses
 		###############################
-		
 	}
 
  	// Index
 	function index(){
-        // $getDetail = file_get_contents('http://10.10.11.184/serawebnew/genSitemap');
 		$data = array(
 			'listLanguage' 	=> $this->Language_model->listLanguage(array('status' => 1)),
 			'listData' 		=> $this->Menu_detail_model->listMenuDetail(),
-			'title'			=> 'Menu Content'
+			'title'			=> 'Menu Content',
 			);
 		$this->load->view('front/kepalaadmin',$data);
-		$this->load->view('front/sidebaradmin',$data);
-		$this->load->view('front/subkepalaadmin',$data);
+		$this->load->view('front/sidebaradmin');
+		$this->load->view('front/subkepalaadmin');
 		$this->load->view('Menu_content/listMenuDetail', $data);
 		$this->load->view('front/footeradmin');
 	}
@@ -71,11 +69,11 @@ class Menu_content extends CI_Controller {
 			'listLanguage' 	=> $this->Language_model->listLanguage(array('status' => 1)),
 			'listData' 		=> $this->Menu_content_model->listContent($idMenuDetail),
 			'detailMenu' 	=> $detailMenu,
-			'title'			=> 'Menu List Content Detail'
+			'title'			=> 'Menu List Content Detail',
 			);
-		$this->load->view('front/kepalaadmin',$data);
-		$this->load->view('front/sidebaradmin',$data);
-		$this->load->view('front/subkepalaadmin',$data);
+		$this->load->view('front/kepalaadmin');
+		$this->load->view('front/sidebaradmin');
+		$this->load->view('front/subkepalaadmin');
 		$this->load->view('Menu_content/listContent', $data);
 		$this->load->view('front/footeradmin');
 	}
@@ -93,21 +91,18 @@ class Menu_content extends CI_Controller {
 			$detailMenu['title'] = $row['title'];
 			$detailMenu['slug'] = $row['slug'];
 			$detailMenu['position'] = $row['position'];
-			// penambahan
-			// $detailMenu['imgalt_'.$row['language_id']] = $row['imgalt']; 
 		}
 		
 		$data = array(
 			'listLanguage' => $this->Language_model->listLanguage(array('status' => 1)),
 			'idMenuDetail' => $idMenuDetail,
 			'detailMenu' => $detailMenu,
-			'title' => 'Input Content Menu Detail'
+			'title' => 'Input Content Menu Detail',
 			);
 		
 		foreach($data['listLanguage'] as $row){
 			$this->form_validation->set_rules('content_'.$row['language_id'], 'content_'.$row['language_id'], 'required');
 			$this->form_validation->set_rules('title_'.$row['language_id'], 'title_'.$row['language_id'], 'required');
-			$this->form_validation->set_rules('imgalt_'.$row['language_id'], 'imgalt_'.$row['language_id'], 'required');
 		}
 		$this->form_validation->set_rules('position', 'position', 'required');
 		
@@ -116,8 +111,8 @@ class Menu_content extends CI_Controller {
 				$this->session->set_flashdata('itemFlashData','insertGagal');
 			
 			$this->load->view('front/kepalaadmin', $data);
-			$this->load->view('front/sidebaradmin',$data);
-			$this->load->view('front/subkepalaadmin',$data);
+			$this->load->view('front/sidebaradmin');
+			$this->load->view('front/subkepalaadmin');
 			$this->load->view('Menu_content/input',$data);
 			$this->load->view('front/footeradmin');
 		}
@@ -201,11 +196,9 @@ class Menu_content extends CI_Controller {
 				$subtitle = @$_POST['subtitle_'.$row['language_id']];
 				$url_video = @$_POST['url_video'];
 				$language_id = $row['language_id'];
-
-				// penambahan
-				$imgalt = $_POST['imgalt_'.$row['language_id']];
 				
 				$dataInsert = array(
+					'slug'		=> slug($title),
 					'content_id' => $content_id,
 					'menu_detail_id' => $menu_detail_id,
 					'content' => $content,
@@ -219,13 +212,10 @@ class Menu_content extends CI_Controller {
 					'create_date' 	=> date('Y-m-d H:i:s'),
 					'language_id' => @$language_id,
 					'url_video' => @$url_video,
-					'imgalt'	=> @$imgalt
 					);
-				$insert = $this->Menu_content_model->insertContent($dataInsert);  
-				// print_r($dataInsert);
+				$insert = $this->Menu_content_model->insertContent($dataInsert);
+				
 			}
-
-            $getDetail = file_get_contents(base_url('genSitemap'));
 			$this->session->set_flashdata('itemFlashData','insertSukses');
 			redirect('back/menu_content/listContent/'.$idMenuDetail);
 
@@ -257,12 +247,12 @@ class Menu_content extends CI_Controller {
 			'listLanguage' => $this->Language_model->listLanguage(array('status' => 1)),
 			'listContentDetail' => $listContentDetail,
 			'detail' => $detail,
-			'title' => 'Detail Content Menu Detail'
+			'title' => 'Detail Content Menu Detail',
 			);
 		
 		$this->load->view('front/kepalaadmin',$data);
-		$this->load->view('front/sidebaradmin',$data);
-		$this->load->view('front/subkepalaadmin',$data);
+		$this->load->view('front/sidebaradmin');
+		$this->load->view('front/subkepalaadmin');
 		$this->load->view('Menu_content/detail',$data);
 		$this->load->view('front/footeradmin');
 		
@@ -279,9 +269,6 @@ class Menu_content extends CI_Controller {
 			$detail['title_'.$row['language_id']] = $row['title'];
 			$detail['subtitle_'.$row['language_id']] = $row['subtitle'];
 			$detail['content_'.$row['language_id']] = $row['content'];
-			//img desc
-			$detail['imgalt_'.$row['language_id']] = $row['imgalt'];
-			$detail['language_id']	= $row['language_id'];
 			$idMenuContent = $row['content_id'];
 			$idMenuDetail = $row['menu_detail_id'];
 		}
@@ -304,7 +291,7 @@ class Menu_content extends CI_Controller {
 			'detailMenu' => $detailMenu,
 			'detail' => $detail,
 			'idMenuContent' => $idMenuContent,
-			'title' => 'Edit Content Menu Detail'
+			'title' => 'Edit Content Menu Detail',
 			);
 		
 		foreach($data['listLanguage'] as $row){
@@ -318,10 +305,10 @@ class Menu_content extends CI_Controller {
 				$this->session->set_flashdata('itemFlashData','insertGagal');
 			
 			$this->load->view('front/kepalaadmin',$data);
-			$this->load->view('front/sidebaradmin',$data);
-			$this->load->view('front/subkepalaadmin',$data);
+			$this->load->view('front/sidebaradmin');
+			$this->load->view('front/subkepalaadmin');
 			$this->load->view('Menu_content/edit',$data);
-			$this->load->view('front/footeradmin',$data);
+			$this->load->view('front/footeradmin');
 		}
 		else {
 			// print_r($_POST);
@@ -396,7 +383,6 @@ class Menu_content extends CI_Controller {
 				$content = $_POST['content_'.$row['language_id']];
 				$title = $_POST['title_'.$row['language_id']];
 				$subtitle = @$_POST['subtitle_'.$row['language_id']];
-				$imgalt = @$_POST['imgalt_'.$row['language_id']]; // img alt
 				$language_id = $row['language_id'];
 				
 				$dataUpdate['content_id'] = $content_id;
@@ -405,16 +391,14 @@ class Menu_content extends CI_Controller {
 				$dataUpdate['subtitle'] = @$subtitle;
 				$dataUpdate['position'] = $position;
 				$dataUpdate['status'] = $status;
-				$dataUpdate['url_video'] = $url_video; 
+				$dataUpdate['url_video'] = $url_video;
 				$dataUpdate['update_user'] =  $this->userid;
 				$dataUpdate['update_date'] = date('Y-m-d H:i:s');
-				$dataUpdate['imgalt'] = @$imgalt; // img desc
 				
 				$whereUpdate = array('content_id' => $content_id, 'language_id' => $language_id);
 				$update = $this->Menu_content_model->updateContent($dataUpdate, $whereUpdate);
 			}
-
-			$getDetail = file_get_contents(base_url('genSitemap'));  // untuk generate sitemap xml
+			
 			$this->session->set_flashdata('itemFlashData','insertSukses');
 			redirect('back/menu_content/listContent/'.$idMenuDetail);
 			
@@ -451,7 +435,11 @@ class Menu_content extends CI_Controller {
 			$dd = $this->db->query("SELECT count(distinct b.content_id) as itungan from menu_content b where b.menu_detail_id = '$idd' ")->row();
 			// End
 			
-			$row[] 	= @$dd->itungan;   
+			$row[] 	= @$dd->itungan;  
+			// $row[] 	= $d['create_date'];
+			// $row[] 	= $d['namadepan1'].' '.$d['namabelakang1'];
+			// $row[] 	= $d['update_date'];
+			// $row[] 	= $d['namadepan2'].' '.$d['namabelakang2'];
 			
 			// Action 
 			$row[] 	=  	"<a href='".site_url('back/menu_content/listContent/'.$d['menu_detail_id'])."' class='btn btn-primary btn-sm'><i class='fa fa-eye'></i> Detail </a>";
@@ -505,7 +493,11 @@ class Menu_content extends CI_Controller {
 			$row[] 	= $d['title'];
 			$row[] 	= $d['position'];
 			$row[] 	= @$gambar;
-			$row[] 	= $status; 
+			$row[] 	= $status;
+			// $row[] 	= $d['create_date'];
+			// $row[] 	= $d['namadepan1'].' '.$d['namabelakang1'];
+			// $row[] 	= $d['update_date'];
+			// $row[] 	= $d['namadepan2'].' '.$d['namabelakang2'];
 			
 			// Action 
 			$row[] 	=  	"

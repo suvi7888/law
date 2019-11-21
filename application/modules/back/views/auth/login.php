@@ -2,12 +2,12 @@
 	<div class="row">       
 		<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 			<div class="logo margin-top-30 text-center">
-				<img src="<?php echo base_url('assets/assets_backend/images/logoSERA.png'); ?>" alt="Serasi Autoraya" width="200px"/> 
+				<img src="<?php echo base_url('assets/logo/logo-esdm.png'); ?>" alt="myLogo" width="200px"/> 
 			</div> 
 			<div class="box-login">  
 				<?php echo $message;?> 
 
-				<?php echo form_open("index.php/back/auth/login","class='form-login'");?> 
+				<?php echo form_open("back/auth/login","class='form-login'");?> 
 				<center style="padding-bottom: 5px;">
 					<h3 style="color: #007AFF;">Content Management System</h3>
 				</center>

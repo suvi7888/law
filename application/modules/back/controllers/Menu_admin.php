@@ -12,13 +12,14 @@ class Menu_admin extends CI_Controller {
 		
 		$this->load->model('Language_model'); 
 		$this->load->model('Menu_admin_model');
+		$this->load->model('Settings_model');
 		$this->load->model('News_model');
 
 		$this->load->model('Hak_akses_model');
 
 			###############################
 		## END Cek Hak Akses
-		if (!$this->ion_auth->logged_in()){
+		/*if (!$this->ion_auth->logged_in()){
 			//redirect them to the login page
 			redirect('back/auth/login', 'refresh');
 		} else {
@@ -30,7 +31,7 @@ class Menu_admin extends CI_Controller {
 			if (!$cek) {
 				redirect('back/dashboard/','refresh');
 			}
-		}
+		}*/
 		## END Cek Hak Akses
 		###############################
 	}
@@ -41,9 +42,15 @@ class Menu_admin extends CI_Controller {
 	public function index()
 	{
 
+		
+
+
 		$data = array(
 			'title' 	=> 'Setting Menu Admin', 
 			);
+
+		
+
 
  		// Tampilan 
 		$this->load->view('front/kepalaadmin',$data);
@@ -60,6 +67,9 @@ class Menu_admin extends CI_Controller {
 	// bisa juga untuk keperluan Aplication Programming Interface
 	public function ambildata()
 	{
+
+
+
 		$list = $this->Menu_admin_model->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
@@ -101,16 +111,21 @@ class Menu_admin extends CI_Controller {
 
 
 	public function add()
-	{
+	{ 
+
+
 		$this->form_validation->set_rules('nama_menu', 'Nama Menu', 'required');  
         // EN_judulberita EN_isiberita
 		if ($this->form_validation->run() == FALSE) { 
- 
+
 
 			// $this->add(); 
 			$data = array(
 				'title' => 'Add Menu Admin',
 				);
+
+
+
 
  		// Tampilan 
 			$this->load->view('front/kepalaadmin',$data);
@@ -139,7 +154,8 @@ class Menu_admin extends CI_Controller {
 
 
 	public function edit($id = '')
-	{
+	{ 
+
 		$this->form_validation->set_rules('nama_menu', 'Nama Menu', 'required');  
         // EN_judulberita EN_isiberita
 		if ($this->form_validation->run() == FALSE) { 
@@ -148,10 +164,13 @@ class Menu_admin extends CI_Controller {
 
 			// $this->add(); 
 			$data = array(
-				'title' => 'Edit Menu Admin',
-				'data' 	=> $this->Menu_admin_model->getMenuAdmin($id), 
-				'id'	=> $id
+				'title' 	=> 'Edit Menu Admin',
+				'data' 		=> $this->Menu_admin_model->getMenuAdmin($id), 
+				'id'		=> $id,
+				'setting'	=> $this->Settings_model->getSetting()
 				);
+
+
 
  		// Tampilan 
 			$this->load->view('front/kepalaadmin',$data);
@@ -162,10 +181,12 @@ class Menu_admin extends CI_Controller {
 
 		} else {
 
-			$namamenu = $this->input->post('nama_menu');
+			$namamenu 	= $this->input->post('nama_menu');
+			$id_website = $this->input->post('id_website');
 
 			$insert = array(
 				'nama_menu' 	=> $namamenu, 
+				'id_website'	=> $id_website
 				);
 
 			$where = array('id_menu' => $id);	 
@@ -180,7 +201,9 @@ class Menu_admin extends CI_Controller {
 
 	// delete
 	public function delete($id='')
-	{
+	{ 
+
+
 		if (!$this->ion_auth->is_admin())
 		{
 			//redirect them to the login page
@@ -233,6 +256,8 @@ class Menu_admin extends CI_Controller {
 
 	public function logikasidebar()
 	{
+
+
 		$user = $this->ion_auth->user()->row();
 		$userid = $user->id; 
 		$grup = $this->db->query("SELECT group_id from users_groups where user_id = '$userid'")->row(); 

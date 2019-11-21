@@ -55,7 +55,7 @@
           <label for="">Kategori</label> 
             <?php  
             $q = $this->db->query("SELECT category_id, category_name from master_category
-              where status = '1' and relasi is null")->result();
+              where status = '1' and relasi = '0' ")->result();
               ?>
 
               <select id="grup" class="form-control" name="kategori">
@@ -71,8 +71,7 @@
           <select class="form-control"  id="allResultOffice" name="parent">
               <option value="0"> Pilih Dahulu Kategori</option>
           </select> 
-          </div>
-  
+          </div> 
  
 
         <div class="form-group">
@@ -105,12 +104,7 @@
     <!-- End konten bahasa indonesia -->
 
     <!-- start konten bahasa inggris -->
-    <div class="col-sm-6">
-
-
-
-
-
+    <div class="col-sm-6"> 
       <h1>EN</h1>
 
       <!-- Konten Indonesia -->
@@ -124,11 +118,6 @@
        <textarea cols="80"  id="redactor_content_eng" rows="10" name="EN_isiberita"> <?php echo set_value('EN_isiberita'); ?> </textarea>
      </div>
 
-       <div class="form-group">
-          <label for="">Image Desc </label><br>
-          <input type="text" class="form-control" id="" placeholder="Image Description / Alternative" name="imgalt" value="<?php echo set_value('imgalt'); ?>">
-        </div>  
-
    </div>
 
 
@@ -141,11 +130,6 @@
 
 
 
-
-
-
-</div>
-</div>
 
 
 <script type="text/javascript">
@@ -201,3 +185,7 @@
 
     </script>
 
+
+</div>
+</div>
+ 

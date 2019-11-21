@@ -98,11 +98,11 @@ class News extends CI_Controller {
         }
 
         $output = array(
-           "draw" => $_POST['draw'],
-           "recordsTotal" => $this->News_model->count_all(),
-           "recordsFiltered" => $this->News_model->count_filtered(),
-           "data" => $data,
-           );
+         "draw" => $_POST['draw'],
+         "recordsTotal" => $this->News_model->count_all(),
+         "recordsFiltered" => $this->News_model->count_filtered(),
+         "data" => $data,
+         );
         //output to json format
         echo json_encode($output);
     } 
@@ -116,13 +116,13 @@ class News extends CI_Controller {
     {
 		// array lemparan
       $data = array(
-       'title' => 'Add Posting',
-       'lang' 	=> $this->News_model->getLangNews(),
-       'cat'	=> $this->News_model->getkategori(),
-       'bu'	=> $this->News_model->getbisnisunit(),
-       'error' => ''
+         'title' => 'Add Posting',
+         'lang' 	=> $this->News_model->getLangNews(),
+         'cat'	=> $this->News_model->getkategori(),
+			// 'bu'	=> $this->News_model->getbisnisunit(), 
+         'error' => ''
 
-       );
+         );
 
  		// Tampilan
       $this->load->view('front/kepalaadmin',$data);
@@ -145,8 +145,8 @@ class News extends CI_Controller {
         $config['upload_path'] 		= './uploads/news'; //path folder
         $config['allowed_types'] 	= 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
         $config['max_size'] 		= '2048'; //maksimum besar file 2M
-        $config['min_width']  		= '350'; //lebar maksimum 1288 px
-        $config['min_height']  		= '350'; //tinggi maksimu 768 px
+        // $config['min_width']  		= '350'; //lebar maksimum 1288 px
+        // $config['min_height']  		= '350'; //tinggi maksimu 768 px
         $config['file_name'] 		= $nmfile; // nama yang terupload nantinya
 
         $this->load->library('upload',$config);
@@ -157,9 +157,6 @@ class News extends CI_Controller {
 
 
         $this->form_validation->set_rules('judulberita', 'Judul Berita', 'required');
-        $this->form_validation->set_rules('imgalt', 'Image Description', 'required');
-        $this->form_validation->set_rules('EN_judulberita', 'Judul Berita Bahasa Inggris', 'required');
-        $this->form_validation->set_rules('EN_isiberita', 'Isi Berita Bahasa Inggris', 'required');
         $this->form_validation->set_rules('tagberita[]', 'Tag Berita', 'required');
         // EN_judulberita EN_isiberita
         if ($this->form_validation->run() == FALSE) {
@@ -191,94 +188,115 @@ class News extends CI_Controller {
         			$this->db->query("UPDATE settings SET idberita = '$idberita'");
  					// end
 
-                    $imgalt         = $_POST['imgalt'];
+
 	        		// Input Berita
-                    $judulberita 	= trim($_POST['judulberita']);
-                    $isiberita 		= trim($_POST['isiberita']);
-	        		// End 
+        			$judulberita 	= trim($_POST['judulberita']);
+        			$isiberita 		= trim($_POST['isiberita']);
+	        		// End
+
 	        		// Settingan yang dipake banyak
-                    $tglberita 		= date("Y-m-d");
-                    $kategori 		= trim($_POST['kategori']);
-                    $parent			= $_POST['parent'];
-                    $status 		= trim($_POST['status']); 
-        			// tagberita   
-                    $tagberitaPost 		= $_POST['tagberita'];
-                    for ($i=0; $i < count($tagberitaPost) ; $i++) { 
-                        @$tagberita .= $tagberitaPost[$i].",";
-                    }
-                    $tagberita = substr($tagberita,0,-1); 
+        			$tglberita 		= date("Y-m-d");
+        			$kategori 		= trim($_POST['kategori']);
+        			$parent			= $_POST['parent'];
+        			$status 		= trim($_POST['status']);
 
-                    $slugberita 	= slug($judulberita); 
+
+        			// tagberita
+
+        			$tagberitaPost 		= $_POST['tagberita'];
+        			for ($i=0; $i < count($tagberitaPost) ; $i++) { 
+        				@$tagberita .= $tagberitaPost[$i].",";
+        			}
+        			$tagberita = substr($tagberita,0,-1);
+
+
+        			$slugberita 	= slug($judulberita);
+
 	        		// Input berita bahasa inggris
-                    $enjudulberita	= $_POST['EN_judulberita'];
-                    $enisiberita	= $_POST['EN_isiberita'];  
+        			$enjudulberita	= '0';
+        			$enisiberita	= '0';
+
+
         			// Session
-                    $user 			= $this->ion_auth->user()->row();
-                    $iduser 		= $user->id;
-                    $create_date	= date("Y-m-d h:i:s");  
-        			// $bu 			= $_POST['bisnisunit']; 
+        			$user 			= $this->ion_auth->user()->row();
+        			$iduser 		= $user->id;
+        			$create_date	= date("Y-m-d h:i:s");
 
-	        		// input pertama 
-                    $insertID = array(
-                        'id' 			=> @$idberita,
-                        'datepost' 		=> @$tglberita,
-                        'title' 		=> @$judulberita,
-                        'slug' 			=> @$slugberita,
-                        'content' 		=> @$isiberita,
-                        'gambar' 		=> @$namafile,
-                        'imgalt'        => @$imgalt,
-                        'category_id' 	=> @$kategori,
-                        'parent_id'		=> @$parent,
-                        'status' 		=> @$status,
-                        'language_id' 	=> 1,
-                        'create_user' 	=> @$iduser,
-                        'create_date' 	=> @$create_date, 
-                        'tagberita'		=> @$tagberita
-                        );
-                    $this->db->insert('news_content', $insertID); 
 
-                    $insertEN = array(
-                        'id' 			=> $idberita,
-                        'datepost' 		=> $tglberita,
-                        'title' 		=> $enjudulberita,
-                        'slug' 			=> $slugberita,
-                        'content' 		=> $enisiberita,
-                        'gambar' 		=> $namafile,
-                        'imgalt'        => @$imgalt,
-                        'category_id' 	=> $kategori,
-                        'parent_id'		=> $parent,
-                        'status' 		=> $status,
-                        'language_id' 	=> 2,
-                        'create_user' 	=> $iduser,
-                        'create_date' 	=> $create_date, 
-                        'tagberita'		=> $tagberita
-                        );
-                    $this->db->insert('news_content', $insertEN); 
+        			// $bu 			= $_POST['bisnisunit'];
+
+	        		// input pertama
+
+        			$insertID = array(
+        				'id' 			=> $idberita,
+        				'datepost' 		=> $tglberita,
+        				'title' 		=> $judulberita,
+        				'slug' 			=> $slugberita,
+        				'content' 		=> $isiberita,
+        				'gambar' 		=> $namafile,
+        				'category_id' 	=> $kategori,
+        				'parent_id'		=> $parent,
+        				'status' 		=> $status,
+        				'language_id' 	=> 1,
+        				'create_user' 	=> $iduser,
+        				'create_date' 	=> $create_date,
+        				// 'id_bu'			=> $bu,
+        				'tagberita'		=> $tagberita
+        				);
+        			$this->db->insert('news_content', $insertID); 
+
+        			$insertEN = array(
+        				'id' 			=> $idberita,
+        				'datepost' 		=> $tglberita,
+        				'title' 		=> $enjudulberita,
+        				'slug' 			=> $slugberita,
+        				'content' 		=> $enisiberita,
+        				'gambar' 		=> $namafile,
+        				'category_id' 	=> $kategori,
+        				'parent_id'		=> $parent,
+        				'status' 		=> $status,
+        				'language_id' 	=> 2,
+        				'create_user' 	=> $iduser,
+        				'create_date' 	=> $create_date,
+        				// 'id_bu'			=> $bu,
+        				'tagberita'		=> $tagberita
+        				);
+        			$this->db->insert('news_content', $insertEN); 
 					// Memberikan pemberitahuan Berhasil
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-success"> Berita Berhasil di Posting. </div>');
-                    
-                    $getDetail = file_get_contents(base_url('genSitemap'));
-                    redirect('back/news/','refresh'); 
+        			$this->session->set_flashdata('pesan', '<div class="alert alert-success"> Berita Berhasil di Posting. </div>');
 
-                    // print_r($insertID);
+        			// echo "Berhasil";
+        			redirect('back/news/','refresh'); 
 
 
-                } else { 
+        		} else {
 
-                   $data = array(
-                    'title' => 'Add Posting',
-                    'lang' 	=> $this->News_model->getLangNews(),
-                    'cat'	=> $this->News_model->getkategori(),
-                    'bu'	=> $this->News_model->getbisnisunit(),
+        								// $salah = $this->upload->display_errors();
+
+        			/* menampilkan pesan error ketika file upload gagal / belum terpilih */
+        			// $data['error'] = $this->upload->display_errors('<div class="alert alert-warning">','</div>');
+
+        			// ";
+        			// echo $this->upload->display_errors();  
+
+        			$data = array(
+        				'title' => 'Add Posting',
+        				'lang' 	=> $this->News_model->getLangNews(),
+        				'cat'	=> $this->News_model->getkategori(),
         				'error' => $this->upload->display_errors('<div class="alert alert-warning">','</div>')//''
 
-        				); 
- 		             // Tampilan
-                   $this->load->view('front/kepalaadmin',$data);
-                   $this->load->view('front/sidebaradmin',$data);
-                   $this->load->view('front/subkepalaadmin',$data);
+        				);
+
+ 		// Tampilan
+        			$this->load->view('front/kepalaadmin',$data);
+        			$this->load->view('front/sidebaradmin',$data);
+        			$this->load->view('front/subkepalaadmin',$data);
 					$this->load->view('News/newsadd',$data); // disini bermain
-					$this->load->view('front/footeradmin',$data);  
+					$this->load->view('front/footeradmin',$data);
+        			//tambahkan
+        			// $this->add($data);
+
+
 				}
 
         	} // end form validation
@@ -292,6 +310,7 @@ class News extends CI_Controller {
 
     }
     // end 
+
 
     public function edit($id = '')
     {
@@ -309,10 +328,7 @@ class News extends CI_Controller {
         $data['error'] 				= '';
 
 
-        $this->form_validation->set_rules('judulberita', 'Judul Berita', 'required');
-        $this->form_validation->set_rules('imgalt', 'Image Description', 'required');
-        $this->form_validation->set_rules('EN_judulberita', 'Judul Berita Bahasa Inggris', 'required');
-        $this->form_validation->set_rules('EN_isiberita', 'Isi Berita Bahasa Inggris', 'required');
+        $this->form_validation->set_rules('judulberita', 'Judul Berita', 'required'); 
         // EN_judulberita EN_isiberita
         if ($this->form_validation->run() == FALSE) {
 
@@ -327,8 +343,7 @@ class News extends CI_Controller {
         		'title' => 'Edit News' ,
         		'idn'	=> $idn,
         		'eng'	=> $eng,
-        		'cat'	=> $this->News_model->getkategori(),
-        		'bu'	=> $this->News_model->getbisnisunit(),
+        		'cat'	=> $this->News_model->getkategori(), 
         		);
 
         	$this->load->view('front/kepalaadmin',$data);
@@ -341,147 +356,301 @@ class News extends CI_Controller {
 
 			$user_id 		= $this->session->userdata('user_id');
 
-			/*$dd 			= $this->db->query("SELECT idberita+1 as nilai FROM settings")->row();
+			$dd 			= $this->db->query("SELECT idberita+1 as nilai FROM settings")->row();
 			$idberita 		= $dd->nilai;
-			$this->db->query("UPDATE settings SET idberita = '$idberita'");*/
+			$this->db->query("UPDATE settings SET idberita = '$idberita'");
  					// end
 
 	        		// Input Berita
 			$judulberita 	= trim($_POST['judulberita']);
 			$isiberita 		= trim($_POST['isiberita']);
-            $imgalt = $_POST['imgalt'];
 	        		// End
 
 	        		// Settingan yang dipake banyak
-            $tglberita 		= date("Y-m-d");
-            $kategori 		= trim($_POST['kategori']);
-            $parent 		= trim($_POST['parent']);
-            $status 		= trim($_POST['status']);  
-            $slugberita 	= slug($judulberita); 
+			$tglberita 		= date("Y-m-d");
+			$kategori 		= trim($_POST['kategori']);
+			$parent 		= trim($_POST['parent']);
+			$status 		= trim($_POST['status']);
+
+			$slugberita 	= slug($judulberita);
+
 	        		// Input berita bahasa inggris
-            $enjudulberita	= $_POST['EN_judulberita'];
-            $enisiberita	= $_POST['EN_isiberita'];  
+			$enjudulberita	= '0';//$_POST['EN_judulberita'];
+			$enisiberita	= '0';//$_POST['EN_isiberita'];
+
+
         			// Session
-            $user 			= $this->ion_auth->user()->row();
-            $iduser 		= $user->id;
-            $update_date	= date("Y-m-d h:i:s"); 
+			$user 			= $this->ion_auth->user()->row();
+			$iduser 		= $user->id;
+			$update_date	= date("Y-m-d h:i:s");
+
+			// $bisnisunit		= $_POST['bisnisunit'];
+
 			//Tag Berita
-            $tagberitaPost 		= $_POST['tagberita'];
-            for ($i=0; $i < count($tagberitaPost) ; $i++) { 
-                @$tagberita .= $tagberitaPost[$i].",";
-            }
-            $tagberita = substr($tagberita,0,-1);
+			$tagberitaPost 		= $_POST['tagberita'];
+			for ($i=0; $i < count($tagberitaPost) ; $i++) { 
+				@$tagberita .= $tagberitaPost[$i].",";
+			}
+			$tagberita = substr($tagberita,0,-1);
 
 
 
-            if ($this->upload->do_upload('filefoto'))
-            {
-                $gbr 				= $this->upload->data();
-                $namafile 			= $gbr['file_name'];  
-                $updateID = array(
-                   'title' 		    => @$judulberita,
-                   'gambar' 		=> @$namafile,
-                   'content' 		=> @$isiberita,
-                   'category_id' 	=> @$kategori,
-                   'parent_id'		=> @$parent,
-                   'status' 		=> @$status,
-                   'update_user' 	=> @$iduser,
-                   'update_date' 	=> @$update_date, 
-                   'tagberita'		=> @$tagberita,
-                   'imgalt'         => @$imgalt
-                   );
-                $this->db->where('id', $id);
-                $this->db->where('language_id', 1);
-                $this->db->update('news_content', $updateID); 
+			if ($this->upload->do_upload('filefoto'))
+			{
+				$gbr 				= $this->upload->data();
+				$namafile 			= $gbr['file_name'];
+ 
+				$updateID = array(
+					'title' 		=> $judulberita,
+					'gambar' 		=> $namafile,
+					'content' 		=> $isiberita,
+					'category_id' 	=> $kategori,
+					'parent_id'		=> $parent,
+					'status' 		=> $status,
+					'update_user' 	=> $iduser,
+					'update_date' 	=> $update_date,
+					// 'id_bu'			=>	$bisnisunit,
+					'tagberita'		=> $tagberita
+					);
+				$this->db->where('id', $id);
+				$this->db->where('language_id', 1);
+				$this->db->update('news_content', $updateID); 
 
-                $updateEN = array(
-                  'title' 		    => @$enjudulberita,
-                  'gambar' 		    => @$namafile,
-                  'content' 		=> @$enisiberita,
-                  'category_id' 	=> @$kategori,
-                  'parent_id'		=> @$parent,
-                  'status' 		    => @$status,
-                  'update_user' 	=> @$iduser,
-                  'update_date' 	=> @$update_date, 
-                  'tagberita'		=> @$tagberita,
-                  'imgalt'          => @$imgalt
-                  );
-                $this->db->where('id', $id);
-                $this->db->where('language_id', 2);
-                $this->db->update('news_content', $updateEN); 
-	        		// end input kedua
+
+					$updateEN = array(
+						'title' 		=> $enjudulberita,
+						'gambar' 		=> $namafile,
+						'content' 		=> $enisiberita,
+						'category_id' 	=> $kategori,
+						'parent_id'		=> $parent,
+						'status' 		=> $status,
+						'update_user' 	=> $iduser,
+						'update_date' 	=> $update_date,
+						// 'id_bu'			=>	$bisnisunit,
+						'tagberita'		=> $tagberita
+						);
+					$this->db->where('id', $id);
+					$this->db->where('language_id', 2);
+					$this->db->update('news_content', $updateEN); 
 
 					// Memberikan pemberitahuan Berhasil
-                $this->session->set_flashdata('pesan', '<div class="alert alert-success"> Berita Berhasil di Rubah.  </div>'); 
-                $getDetail = file_get_contents(base_url('genSitemap'));
-                redirect('back/news/','refresh'); 
-            } else {
+                  $this->session->set_flashdata('pesan', '<div class="alert alert-info"> Berita Berhasil di Rubah.  </div>');
+
+        			// echo "Berhasil";
+                  redirect('back/news/','refresh');
 
 
-              $updateID = array(
-                 'title' 		    => @$judulberita, 
-                 'content' 		=> @$isiberita,
-                 'category_id' 	=> @$kategori,
-                 'parent_id'		=> @$parent,
-                 'status' 		=> @$status,
-                 'update_user' 	=> @$iduser,
-                 'update_date' 	=> @$update_date, 
-                 'imgalt'     => @$imgalt,
-                 'tagberita'		=> @$tagberita
-                 );
-              $this->db->where('id', $id);
-              $this->db->where('language_id', 1);
-              $this->db->update('news_content', $updateID);  
+        		// redirect(site_url('akun/posts/'),'refresh');
 
-              $updateEN = array(
-                'title' 		    => @$enjudulberita, 
-                'content' 		=> @$enisiberita,
-                'category_id' 	=> @$kategori,
-                'parent_id'		=> @$parent,
-                'status' 		    => @$status,
-                'update_user' 	=> @$iduser,
-                'update_date' 	=> @$update_date, 
-                'imgalt'      => @$imgalt,
-                'tagberita'		=> @$tagberita
-                );
-              $this->db->where('id', $id);
-              $this->db->where('language_id', 2);
-              $this->db->update('news_content', $updateEN); 
+              } else { 
+
+                  $updateID = array(
+                     'title' 		=> $judulberita, 
+                     'content' 		=> $isiberita,
+                     'category_id' 	=> $kategori,
+                     'parent_id'		=> $parent,
+                     'status' 		=> $status,
+                     'update_user' 	=> $iduser,
+                     'update_date' 	=> $update_date,
+							// 'id_bu'			=>	$bisnisunit,
+                     'tagberita'		=> $tagberita
+                     );
+                  $this->db->where('id', $id);
+                  $this->db->where('language_id', 1);
+                  $this->db->update('news_content', $updateID); 
+
+                  $updateEN = array(
+                      'title' 		=> $enjudulberita, 
+                      'content' 		=> $enisiberita,
+                      'category_id' 	=> $kategori,
+                      'parent_id'		=> $parent,
+                      'status' 		=> $status,
+                      'update_user' 	=> $iduser,
+                      'update_date' 	=> $update_date,
+						// 'id_bu'			=>	$bisnisunit,
+                      'tagberita'		=> $tagberita
+                      );
+                  $this->db->where('id', $id);
+                  $this->db->where('language_id', 2);
+                  $this->db->update('news_content', $updateEN); 
+
 					// Memberikan pemberitahuan Berhasil
-              $this->session->set_flashdata('pesan', '<div class="alert alert-success"> Berita Berhasil di Ubah.  </div>'); 
-              $getDetail = file_get_contents(base_url('genSitemap'));
-              redirect('back/news/','refresh');
+                  $this->session->set_flashdata('pesan', '<div class="alert alert-info"> Berita Berhasil di Ubah.  </div>');  
+                  redirect('back/news/','refresh');
 
+
+              } 
 
           }
 
-        	// } // end form validation
+
+
+      }
+
+	// Edit Proses
+      public function editprosesIDs($idberita ='')
+      { 
+
+
+          $judulberita 	= trim($_POST['judulberita']);
+          $isiberita 		= trim($_POST['isiberita']);
+	        		// End
+
+	        		// Settingan yang dipake banyak
+          $tglberita 		= date("Y-m-d");
+          $kategori 		= trim($_POST['kategori']);
+          $status 		= trim($_POST['status']);
+
+          $slugberita 	= slug($judulberita);
+
+	        		// Input berita bahasa inggris
+          $enjudulberita	= $_POST['EN_judulberita'];
+          $enisiberita	= $_POST['EN_isiberita'];
+
+
+	        		// input pertama
+          echo ("INSERT into news_content (id, datepost, title, slug, content, gambar, category_id, status, language_id ) values ('$idberita','$tglberita','$judulberita', '$slugberita' ,'$isiberita' , '$namafile','$kategori', '$status','1')");
+	        		// end input pertama
+
+	        		// input kedua
+          echo ("INSERT into news_content (id, datepost, title, slug, content, gambar, category_id, status, language_id ) values ('$idberita','$tglberita','$enjudulberita', '$slugberita' ,'$enisiberita' , '$namafile','$kategori', '$status','2')");
+	        		// end input kedua
+
+					// Memberikan pemberitahuan Berhasil
+          $this->session->set_flashdata('pesan', '<div class="alert alert-info"> Berita Berhasil di Posting.  </div>');
+
+          echo "Berhasil";
 
       }
 
 
+	// edit proses ID
+      public function editprosesID($idberita)
+      {
 
-  } 
 
-  public function delete($idberita='')
-  {
-     if (!$this->ion_auth->is_admin())
-     {
+          if (!$_POST) {
+             redirect('back/news','refresh');
+         }
+
+		$nmfile = md5(time()); //nama file saya beri nama langsung dan diikuti fungsi time
+        $config['upload_path'] = './uploads/news'; //path folder
+        $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+        $config['max_size'] = '2048'; //maksimum besar file 2M
+        $config['file_name'] = $nmfile; // nama yang terupload nantinya
+
+        $this->load->library('upload',$config);
+        $this->upload->initialize($config);
+
+        $data['upload_data'] 	= '';
+        $data['error'] 			= '';
+
+
+        // $this->form_validation->set_rules('title', 'Judul Berita', 'required');
+        // $this->form_validation->set_rules('EN_judulberita', 'Judul Berita Bahasa Inggris', 'required');
+        // $this->form_validation->set_rules('EN_isiberita', 'Isi Berita Bahasa Inggris', 'required');
+        // EN_judulberita EN_isiberita
+       /* if ($this->form_validation->run() == FALSE) {
+
+        	$this->session->set_flashdata('message','<div class="alert alert-warning"> </div>');
+
+        	echo "gagal";
+        	// $this->edit();
+
+        } else {*/
+        //
+
+
+
+        	// if(isset($_FILES['filefoto']['name']))
+        	// {
+        	// 	if ($this->upload->do_upload('filefoto'))
+        	// 	{
+
+        	$gbr 				= $this->upload->data();
+        	$namafile 			= $gbr['file_name'];
+        	$user_id 			= $this->session->userdata('user_id');
+
+        		// } else {
+
+
+        			// nilai setting
+        	$dd 			= $this->db->query("SELECT idberita+1 as nilai FROM settings")->row();
+        	$idberita 		= $dd->nilai;
+        	$this->db->query("UPDATE settings SET idberita = '$idberita'");
+ 					// end
+
+
+	        		// Input Berita
+        	$judulberita 	= trim($_POST['judulberita']);
+        	$isiberita 		= trim($_POST['isiberita']);
+	        		// End
+
+	        		// Settingan yang dipake banyak
+        	$tglberita 		= date("Y-m-d");
+        	$kategori 		= trim($_POST['kategori']);
+        	$status 		= trim($_POST['status']);
+
+        	$slugberita 	= slug($judulberita);
+
+	        		// Input berita bahasa inggris
+        	$enjudulberita	= $_POST['EN_judulberita'];
+        	$enisiberita	= $_POST['EN_isiberita'];
+
+
+	        		// input pertama
+        	echo ("INSERT into news_content (id, datepost, title, slug, content, gambar, category_id, status, language_id ) values ('$idberita','$tglberita','$judulberita', '$slugberita' ,'$isiberita' , '$namafile','$kategori', '$status','1')");
+	        		// end input pertama
+
+	        		// input kedua
+        	echo ("INSERT into news_content (id, datepost, title, slug, content, gambar, category_id, status, language_id ) values ('$idberita','$tglberita','$enjudulberita', '$slugberita' ,'$enisiberita' , '$namafile','$kategori', '$status','2')");
+	        		// end input kedua
+
+					// Memberikan pemberitahuan Berhasil
+        	$this->session->set_flashdata('pesan', '<div class="alert alert-info"> Berita Berhasil di Posting.  </div>');
+
+        	echo "Berhasil";
+
+
+        		// redirect(site_url('akun/posts/'),'refresh');
+
+        		// } else {
+        		// 	/* menampilkan pesan error ketika file upload gagal / belum terpilih */
+        		// 	echo $data['error'] = $this->upload->display_errors('<div class="alert alert-warning">','</div>');
+        		// 	$this->add();
+
+
+        		// }
+
+        	//} // end form validation
+
+        }
+	// }
+
+
+
+
+        // Delete
+
+        public function delete($idberita='')
+        {
+        	if (!$this->ion_auth->is_admin())
+        	{
 			//redirect them to the login page
-      $this->session->set_flashdata('pesan', '<div class="alert alert-warning"> Maaf ini bukan hak akses kamu. </div>');
-      redirect('back/dashboard', 'refresh');
-  }
-  else
-  {
+        		$this->session->set_flashdata('pesan', '<div class="alert alert-warning"> Maaf ini bukan hak akses kamu. </div>');
+        		redirect('back/dashboard', 'refresh');
+        	}
+        	else
+        	{
 
-      $user 		= $this->ion_auth->user()->row();
-      $userid 	= $user->id;
-      $grup 		= $this->db->query("SELECT group_id from users_groups where user_id = '$userid'")->row();
-      $grup 		= $grup->group_id;
-      $ambil 		= $this->db->query("SELECT * from news_content where id = '$idberita'")->row();
+        		$user 		= $this->ion_auth->user()->row();
+        		$userid 	= $user->id;
+        		$grup 		= $this->db->query("SELECT group_id from users_groups where user_id = '$userid'")->row();
+        		$grup 		= $grup->group_id;
+        		$ambil 		= $this->db->query("SELECT * from news_content where id = '$idberita'")->row();
 
 
-      if (isset($idberita) and $ambil) {
+        		if (isset($idberita) and $ambil) {
 
 			/*id, category_id, title, datepost, content, slug, status, gambar,
 			create_date, update_date, create_user, update_user, language_id*/
@@ -517,12 +686,12 @@ function getDetail(){
 
 	if ($kota == 0) {
 
-       echo '<option value="0"> Pilih Dahulu Kategori</option>';
-   } else {
-     foreach($listData as $row){ 
+     echo '<option value="0"> Pilih Dahulu Kategori</option>';
+ } else {
+   foreach($listData as $row){ 
 
-       echo '<option value="'.$row->category_id.'">'.$row->category_name.'</option>';
-   }
+     echo '<option value="'.$row->category_id.'">'.$row->category_name.'</option>';
+ }
 }
 }
 

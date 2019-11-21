@@ -53,4 +53,6 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['dapur']	 						= 'back/auth';
+
 $route['(:any)'] 			= 'welcome/$1';

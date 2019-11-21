@@ -6,10 +6,11 @@
 				<nav>
 					<div class="navbar-title">
 						<span>Main Navigation</span>
+						<span>MySite</span> 
 					</div>
 					<ul class="main-navigation-menu">
-
-
+  
+						<!-- Sidebar Admin --> 
 						<li class="">
 							<a href="<?php echo base_url('back/dashboard');?>">
 								<div class="item-content">
@@ -24,16 +25,14 @@
 							</a> 
 						</li>   
 
-						<!-- Sidebar Admin -->
 						<?php  
-						// $thisUriSegment2 = $this->uri->segment(2,0);
-						
+
 						$user = $this->ion_auth->user()->row();
 						$userid = $user->id; 
 						$grup = $this->db->query("SELECT group_id from users_groups where user_id = '$userid'")->row(); 
 						$grup =  $grup->group_id; 
 						$menu = $this->db->query("SELECT a.id_menu, a.nama_menu, a.iconmenu,a.posisi  FROM master_menu_admin a  inner join hakakses b on a.id_menu = b.id_menu 
-							where b.id_group = '$grup' 
+							where b.id_group = '$grup'
 							group by a.id_menu, a.nama_menu, a.iconmenu, a.posisi
 							order by a.posisi asc
 							")->result();  
@@ -51,12 +50,11 @@
 								")->result(); 
 							
 							
-							$active = "";
-							// if ($thisUriSegment2 ){}
+							$active = "";  
 							
 							$token = $this->session->userdata('token');
 							
- 
+
 							if (isset($_GET['token'])){
 								$this->session->set_userdata('token', $_GET['token']);
 							} elseif (!empty($token) and $this->uri->segment(2) !== 'dashboard' ) {
@@ -66,13 +64,10 @@
 								// ($this->session->userdata('token') == '') {
 								$this->session->set_userdata('token', '');
 							}
-							 
 
-							  $token = $this->session->userdata('token');
+
+							$token = $this->session->userdata('token');
  
-
-
-							/*	$tq	=	 $this->db->query("SELECT id_menu from master_menu_admin where id_menu = '$token'")->row();*/
 
 							if ($m->id_menu == $token) {
 								$nyalakan = "active open";
@@ -115,100 +110,68 @@
 							</li>
 
 							<?php } ?>
-							<!-- End Sidebar Admin -->
+							<!-- End Sidebar Admin --> 
+
+							<!-- SuviSanusi Content Editor -->
+							<?php if ($this->ion_auth->is_admin()) { ?>
+
+							<li>
+								<a href="javascript:void(0)">
+									<div class="item-content">
+										<div class="item-media"><i class="ti-align-justify"></i> </div>
+										<div class="item-inner">
+											<span class="title"> SiteMap </span> 
+										</div>
+									</div>
+								</a>
+
+								<ul class="sub-menu" style="display: none;">
+									<?php 
+									$mainMenu = $this->db->query("
+										SELECT * 
+										FROM menu
+										where status = '1' AND language_id = 2
+										ORDER BY `position` ASC
+										")->result();
+										foreach($mainMenu as $row){ ?>
+
+										<li>
+											<a href="javascript:void(0)">
+												<div>
+													<div class="item-inner">
+														<span> <?php echo $row->menu_name; ?> </span> 
+													</div>
+												</div>
+											</a>
+											<ul class="sub-menu" style="display: none;">
+												<?php 
+												$menuId = $row->menu_id;
+												$subMenu = $this->db->query("
+													SELECT * FROM menu_detail
+													WHERE status = '1' AND language_id = 2 AND menu_id = '$menuId'
+													ORDER BY `position` ASC
+													")->result();
+												foreach($subMenu as $rowSubmenu){
+													?>
+													<li>
+														<a href="<?php echo site_url('back/menu_content/listContent/'.$rowSubmenu->menu_detail_id); ?>">
+															<span><?php echo $rowSubmenu->menu_detail_name; ?></span>
+														</a>
+													</li>
+													<?php } ?>
+												</ul>
+											</li>
+											<?php } ?>
+										</ul>
+									</li>
+									<!-- END SuviSanusi Content Editor -->
+
+									<?php } ?> 
+								</ul>
+							</nav>
+						</div>
+					</div> 
 
 
 
-<!-- SuviSanusi Content Editor -->
- <?php if ($this->ion_auth->is_admin()) { ?>
-
-<li>
-	<a href="javascript:void(0)">
-		<div class="item-content">
-			<div class="item-media"><i class="ti-align-justify"></i> </div>
-			<div class="item-inner">
-				<span class="title"> SiteMap </span> 
-			</div>
-		</div>
-	</a>
-	
-	<ul class="sub-menu" style="display: none;">
-	<?php 
-	$mainMenu = $this->db->query("
-		SELECT * 
-		FROM menu
-		where status = '1' AND language_id = 2
-		ORDER BY [position] ASC
-		")->result();
-	foreach($mainMenu as $row){ ?>
-	
-		<li>
-			<a href="javascript:void(0)">
-				<div>
-					<div class="item-inner">
-						<span> <?php echo $row->menu_name; ?> </span> 
-					</div>
-				</div>
-			</a>
-			<ul class="sub-menu" style="display: none;">
-				<?php 
-				$menuId = $row->menu_id;
-				$subMenu = $this->db->query("
-					SELECT * FROM menu_detail
-					WHERE status = '1' AND language_id = 2 AND menu_id = '$menuId'
-					ORDER BY [position] ASC
-					")->result();
-				foreach($subMenu as $rowSubmenu){
-				?>
-				<li>
-					<a href="<?php echo site_url('back/menu_content/listContent/'.$rowSubmenu->menu_detail_id); ?>">
-						<span><?php echo $rowSubmenu->menu_detail_name; ?></span>
-					</a>
-				</li>
-				<?php } ?>
-			</ul>
-		</li>
-	<?php } ?>
-	</ul>
-</li>
-<!-- END SuviSanusi Content Editor -->
-
-<?php } ?>
-<?php /*
-$user = $this->ion_auth->user()->row();
-$userid = $user->id; 
-$grup = $this->db->query("SELECT group_id from users_groups where user_id = '$userid'")->row(); 
-$grup =  $grup->group_id; 
-$menu = $this->db->query("
-SELECT 
-	a.id_menu, a.nama_menu, a.iconmenu,a.posisi 
-FROM master_menu_admin a  inner join hakakses b on a.id_menu = b.id_menu 
-where b.id_group = '$grup' 
-group by a.id_menu, a.nama_menu, a.iconmenu, a.posisi
-order by a.posisi asc
-	")->result();  
-
-$menuNo = 0;
-foreach ($menu as $m) { ?>
-<li class="">
-	<a href="#">
-		<div class="item-content">
-			<div class="item-media">
-				<i class="<?php echo @$m->iconmenu; ?>"></i>
-			</div>
-			<div class="item-inner">
-				<span class="title"> SS|<?php echo $userid; ?>| <?php echo $m->nama_menu; ?> </span> 
-			</div>
-		</div>
-	</a> 
-</li>
-<?php } */
-?>
-					</ul>
-				</nav>
-			</div>
-		</div> 
-
-
-
-			<div class="container-fluid container-fullw bg-white">
+					<div class="container-fluid container-fullw bg-white">

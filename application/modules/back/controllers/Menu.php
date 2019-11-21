@@ -42,8 +42,8 @@ class Menu extends CI_Controller {
 			'title'			=> 'Menu Master',
 			);
 		$this->load->view('front/kepalaadmin',$data);
-		$this->load->view('front/sidebaradmin');
-		$this->load->view('front/subkepalaadmin');
+		$this->load->view('front/sidebaradmin',$data);
+		$this->load->view('front/subkepalaadmin',$data);
 		$this->load->view('Menu/list', $data);
 		$this->load->view('front/footeradmin');
 	}
@@ -51,7 +51,7 @@ class Menu extends CI_Controller {
 
 	function input(){
 		$data = array(
-			'listLanguage' => $this->Language_model->listLanguage(array('status' => 1)),
+			'listLanguage' 	=> $this->Language_model->listLanguage(array('status' => 1)),
 			);
 		
 		$this->form_validation->set_rules('position', 'position', 'required');
@@ -64,7 +64,7 @@ class Menu extends CI_Controller {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$this->session->set_flashdata('itemFlashData','insertGagal');
 			
-			$this->load->view('front/kepalaadmin');
+			$this->load->view('front/kepalaadmin',$data);
 			$this->load->view('front/sidebaradmin');
 			$this->load->view('front/subkepalaadmin');
 			$this->load->view('Menu/input',$data);
@@ -124,7 +124,7 @@ class Menu extends CI_Controller {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$this->session->set_flashdata('itemFlashData','insertGagal');
 			
-			$this->load->view('front/kepalaadmin');
+			$this->load->view('front/kepalaadmin',$data);
 			$this->load->view('front/sidebaradmin');
 			$this->load->view('front/subkepalaadmin');
 			$this->load->view('Menu/edit',$data);

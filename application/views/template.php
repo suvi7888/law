@@ -68,7 +68,7 @@
       $this->load->view(@$page); 
     ?>
 
-    <footer class="site-footer" role="contentinfo">
+    <footer class="site-footer" role="contentinfo" style="border-top: 1px solid #fd5f00; background: #eee;">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-4 mb-5">

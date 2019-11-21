@@ -37,7 +37,7 @@ class Investor extends CI_Controller {
 	
 
 	function index(){
-        $data = array(
+		$data = array(
 			'listData' 		=> $this->Investor_model->tahunReport(),
 			'title'			=> 'Investor Report',
 			);
@@ -107,7 +107,6 @@ class Investor extends CI_Controller {
 				}
 				$this->Investor_model->insertInvestor($insertData);
 			}
-            $getDetail = file_get_contents(base_url('genSitemap'));
 			$this->session->set_flashdata('itemFlashData','insertSukses');
 			redirect('back/investor');
 		
@@ -164,7 +163,6 @@ class Investor extends CI_Controller {
 					$this->Investor_model->updateInvestor($dataUpdate, $whereUpdate);
 				}
 			}
-            $getDetail = file_get_contents(base_url('genSitemap'));
 			$this->session->set_flashdata('itemFlashData','insertSukses');
 			redirect('back/investor');
 		}

@@ -1,139 +1,121 @@
 
     <section class="home-slider owl-carousel">
-      <div class="slider-item" style="background-image: url('<?php echo base_url('assets'); ?>/uploads/8a9ef4738ed20587a65343833f6e726d.jpg');">
+      <?php 
+	  $group = 1;
+	  foreach($content[$group] as $row) { ?>
+	  <div class="slider-item" style="background-image: url('<?php echo base_url('uploads/contents/'.$row['photo']); ?>');">
         <div class="container">
           <div class="row slider-text align-items-center justify-content-center">
             <div class="col-lg-7 text-center col-sm-12 element-animate">
               
-              <h1 class="mb-4"><span>Kami Pengacara Jakarta</span></h1>
-              <p class="mb-5 w-75">Kantor Pengacara Jakarta (KPJ) hadir untuk membantu Anda menemukan SOLUSI masalah Hukum Keluarga</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="slider-item" style="background-image: url('<?php echo base_url('assets'); ?>/images/hero_2.jpg');">
-        <div class="container">
-          <div class="row slider-text align-items-center justify-content-center">
-            <div class="col-lg-7 text-center col-sm-12 element-animate">
-              
-              <h1><span>Create, Enhance and Sustain</span></h1>
-              <p class="mb-5 w-75">Lorem ipsum dolor sit amet, consectetur adipisicing suvi elit.</p>
+              <h1><span><?php echo $row['title']; ?></span></h1>
+              <?php echo $row['content']; ?>
             </div>
           </div>
         </div>
         
       </div>
-
+	  <?php } ?>
     </section>
     <!-- END slider -->
     
     
     <section class="section bg-light">
       <div class="container">
+		<div class="row justify-content-center mb-5">
+          <div class="col-md-8 text-center">
+            <h2 class=" heading mb-4">Area Praktik</h2>
+          </div>
+        </div>
         <div class="row">
-          <div class="col-md-6 col-lg-3 element-animate ">
+		  <?php 
+		  $group = 2;
+		  foreach($content[$group] as $row) { ?>
+		  <div class="col-md-6 col-lg-3 element-animate ">
             <div class="media block-6 d-block text-center">
               <div class="icon mb-3">
-                <img src="<?php echo base_url('assets'); ?>/uploads/jasa-1.png" height="75px">
+                <img src="<?php echo base_url('uploads/contents/'.$row['photo']); ?>" height="75px" alt="<?php echo $row['title']; ?>">
               </div>
               <div class="media-body">
-                <h3 class="heading">Hukun Hak Asuh Anak</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+                <h3 class="heading"><?php echo $row['title']; ?></h3>
+                <?php echo $row['content']; ?>
               </div>
             </div>  
 
           </div>
-          <div class="col-md-6 col-lg-3 element-animate ">
-            <div class="media block-6 d-block text-center">
-              <div class="icon mb-3">
-                <img src="<?php echo base_url('assets'); ?>/uploads/jasa-2.jpg" height="75px">
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Hukum Harta Bersama</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-              </div>
-            </div> 
-
-          </div>
-          <div class="col-md-6 col-lg-3 element-animate ">
-            <div class="media block-6 d-block text-center">
-              <div class="icon mb-3">
-                <img src="<?php echo base_url('assets'); ?>/uploads/jasa-3.png" height="75px">
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Hukum Perceraian</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-              </div>
-            </div> 
-
-          </div>
-          <div class="col-md-6 col-lg-3 element-animate ">
-            <div class="media block-6 d-block text-center">
-              <div class="icon mb-3">
-                <img src="<?php echo base_url('assets'); ?>/uploads/jasa-4.png" height="75px">
-              </div>
-              <div class="media-body">
-                <h3 class="heading">Hukum Warisan</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-              </div>
-            </div> 
-
-          </div>
+		  <?php } ?>
         </div>
       </div>
     </section>
     <!-- END section -->
-
+	
+	<?php $group = 3; $row = $content[$group][0]; ?>
     <section class="section">
       <div class="container">
         <div class="row mb-5">
           <div class="col-12 text-center">
-            <h2>We Are Reliable Engineering In House</h2>
+            <h2><?php echo @$row['title']; ?></h2>
+			<?php echo @$row['content']; ?>
           </div>
         </div>
         <div class="row align-items-stretch">
           <div class="col-lg-4 order-lg-1">
             <div class="h-100"><div class="frame h-100"><div class="feature-img-bg h-100" style="background-image: url('<?php echo base_url('assets'); ?>/images/about_1.jpg');"></div></div></div>
           </div>
+		  
 
           <div class="col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1" >
-
+			<?php 
+			$row = @$content[$group][1]; 
+			if ($row){ ?>
             <div class="feature-1 d-md-flex">
               <div class="align-self-center">
-                <span class="ion ion-leaf display-4 text-primary"></span>
-                <h3>Green Energy</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts.</p>
+                <span class="ion <?php echo $row['subtitle']; ?> display-4 text-primary"></span>
+                <h3><?php echo $row['title']; ?></h3>
+                <?php echo $row['content']; ?>
               </div>
             </div>
+			<?php } ?>
 
+            <?php 
+			$row = @$content[$group][2]; 
+			if ($row){ ?>
             <div class="feature-1 d-md-flex">
               <div class="align-self-center">
-                <span class="ion ion-android-bulb display-4 text-primary"></span>
-                <h3>Precision Mechanics</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts.</p>
+                <span class="ion <?php echo $row['subtitle']; ?> display-4 text-primary"></span>
+                <h3><?php echo $row['title']; ?></h3>
+                <?php echo $row['content']; ?>
               </div>
             </div>
+			<?php } ?>
 
           </div>
           
           <div class="col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3" >
 
+            <?php 
+			$row = @$content[$group][3]; 
+			if ($row){ ?>
             <div class="feature-1 d-md-flex">
               <div class="align-self-center">
-                <span class="ion ion-alert-circled display-4 text-primary"></span>
-                <h3>Construction Machines</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts.</p>
+                <span class="ion <?php echo $row['subtitle']; ?> display-4 text-primary"></span>
+                <h3><?php echo $row['title']; ?></h3>
+                <?php echo $row['content']; ?>
               </div>
             </div>
+			<?php } ?>
 
+            <?php 
+			$row = @$content[$group][4]; 
+			if ($row){ ?>
             <div class="feature-1 d-md-flex">
               <div class="align-self-center">
-                <span class="ion ion-android-happy display-4 text-primary"></span>
-                <h3>Reliable and Stable</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts.</p>
+                <span class="ion <?php echo $row['subtitle']; ?> display-4 text-primary"></span>
+                <h3><?php echo $row['title']; ?></h3>
+                <?php echo $row['content']; ?>
               </div>
             </div>
+			<?php } ?>
 
           </div>
 
@@ -141,19 +123,21 @@
       </div>
     </section>
 
-    
+    <?php 
+	$group = 4; 
+	$row = @$content[$group][0]; 
+	if ($row){ ?>
     <section class="section element-animate">
       <div class="container">
         <div class="row align-items-center mb-5">
           <div class="col-lg-7 order-md-2">
-            <div class=""><div class="frame"><img src="<?php echo base_url('assets'); ?>/images/about_2.jpg" alt="Image" class="img-fluid"></div></div>
+            <div class=""><div class="frame"><img src="<?php echo base_url('uploads/contents/'.$row['photo']); ?>" alt="<?php echo $row['title']; ?>" class="img-fluid"></div></div>
           </div>
           <div class="col-md-5 pr-md-5 mb-5">
             <div class="block-41">
-              <h2 class="block-41-heading mb-5">Create, Enhance and Sustain</h2>
+              <h2 class="block-41-heading mb-5"><?php echo $row['title']; ?></h2>
               <div class="block-41-text">
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                <p><a href="#" class="readmore">Read More <span class="ion-android-arrow-dropright-circle"></span></a></p>
+                <?php echo $row['content']; ?>
               </div>
             </div>
           </div>
@@ -161,67 +145,7 @@
         </div>
       </div>
     </section>
-
-   
-
-    <section class="section border-t pb-0">
-      <div class="container">
-        <div class="row justify-content-center mb-5 element-animate">
-          <div class="col-md-8 text-center">
-            <h2 class=" heading mb-4">Our Latest Projects</h2>
-            <p class="mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-          </div>
-        </div>
-      </div>
-      <div class="container-fluid">
-        <div class="row no-gutters">
-          <div class="col-md-4 element-animate">
-            <a href="project-single.html" class="link-thumbnail">
-              <h3>Ducting Design in Colorado</h3>
-              <span class="ion-plus icon"></span>
-              <img src="<?php echo base_url('assets'); ?>/images/img_1.jpg" alt="Image" class="img-fluid">
-            </a>
-          </div>
-          <div class="col-md-4 element-animate">
-            <a href="project-single.html" class="link-thumbnail">
-              <h3>Tanks Project In California</h3>
-              <span class="ion-plus icon"></span>
-              <img src="<?php echo base_url('assets'); ?>/images/img_2.jpg" alt="Image" class="img-fluid">
-            </a>
-          </div>
-          <div class="col-md-4 element-animate">
-            <a href="project-single.html" class="link-thumbnail">
-              <h3>Structural Design in New York</h3>
-              <span class="ion-plus icon"></span>
-              <img src="<?php echo base_url('assets'); ?>/images/img_3.jpg" alt="Image" class="img-fluid">
-            </a>
-          </div>
-          <div class="col-md-4 element-animate">
-            <a href="project-single.html" class="link-thumbnail">
-              <h3>Stacks Design</h3>
-              <span class="ion-plus icon"></span>
-              <img src="<?php echo base_url('assets'); ?>/images/img_4.jpg" alt="Image" class="img-fluid">
-            </a>
-          </div>
-          <div class="col-md-4 element-animate">
-            <a href="project-single.html" class="link-thumbnail">
-              <h3>Intercate Custom</h3>
-              <span class="ion-plus icon"></span>
-              <img src="<?php echo base_url('assets'); ?>/images/img_1.jpg" alt="Image" class="img-fluid">
-            </a>
-          </div>
-          <div class="col-md-4 element-animate">
-            <a href="project-single.html" class="link-thumbnail">
-              <h3>Banker Design</h3>
-              <span class="ion-plus icon"></span>
-              <img src="<?php echo base_url('assets'); ?>/images/img_2.jpg" alt="Image" class="img-fluid">
-            </a>
-          </div>
-        </div>
-        
-      </div>
-    </section>
-    <!-- END section -->
+	<?php } ?>
 
     <section class="section bg-light block-11">
       <div class="container"> 
@@ -231,6 +155,26 @@
           </div>
         </div>
         <div class="nonloop-block-11 owl-carousel">
+		<?php 
+		  $group = 5;
+		  foreach($content[$group] as $row) { ?>
+		  <div class="item">
+            <div class="block-33 h-100">
+                <div class="vcard d-flex mb-3">
+                  <div class="image align-self-center"><img src="<?php echo base_url('uploads/contents/'.$row['photo']); ?>" alt="<?php echo $row['title']; ?>"></div>
+                  <div class="name-text align-self-center">
+                    <h2 class="heading"><?php echo $row['title']; ?></h2>
+                    <span class="meta"><?php echo $row['subtitle']; ?></span>
+                  </div>
+                </div>
+                <div class="text">
+                  <blockquote>
+                    <?php echo $row['content']; ?>
+                  </blockquote>
+                </div>
+              </div>
+          </div>
+		  <?php } ?>
           <div class="item">
             <div class="block-33 h-100">
                 <div class="vcard d-flex mb-3">
@@ -306,11 +250,11 @@
 
     <section class="section blog">
       <div class="container">
-
+        <?php $group = 6; $row = $content[$group][0]; ?>
         <div class="row justify-content-center mb-5 element-animate">
           <div class="col-md-8 text-center">
-            <h2 class=" heading mb-4">Blog Posts</h2>
-            <p class="mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <h2 class=" heading mb-4"><?php echo $row['title']; ?></h2>
+            <?php echo $row['content']; ?>
           </div>
         </div>
 
@@ -360,7 +304,7 @@
         </div>
       </div>
     </section>
-    <section class="section bg-primary">
+    <!-- section class="section bg-primary">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-8">
@@ -372,4 +316,4 @@
           </div>
         </div>
       </div>
-    </section>
+    </section -->

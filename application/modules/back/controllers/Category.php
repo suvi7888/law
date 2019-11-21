@@ -22,7 +22,7 @@ class Category extends CI_Controller {
 
 		###############################
 		## END Cek Hak Akses
-		if (!$this->ion_auth->logged_in()){
+		/*if (!$this->ion_auth->logged_in()){
 			//redirect them to the login page
 			redirect('back/auth/login', 'refresh');
 		} else {
@@ -34,7 +34,7 @@ class Category extends CI_Controller {
 			if (!$cek) { 
 				redirect('back/dashboard/','refresh'); 
 			}
-		}
+		}*/
 		## END Cek Hak Akses
 		###############################
 	}

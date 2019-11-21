@@ -1,11 +1,11 @@
-<div class="app-content">
+<div class="app-contents">
 	<header class="navbar navbar-default navbar-static-top">
 		<div class="navbar-header">
 			<a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" class="btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
 				<i class="ti-align-justify"></i>
 			</a> 
 			<a class="navbar-brand" href="<?php echo site_url('back/dashboard'); ?>"> 
-				<img src="<?php echo base_url('assets/assets_frontend/images/logo/fav-icon.png'); ?>" height="90%">  
+				<img src="<?php echo base_url('assets/logo/logo-esdm.png'); ?>" height="60px" alt="myLogo">  
 			</a> 
 			<a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
 				<i class="ti-align-justify"></i>
@@ -44,21 +44,4 @@
 
 	<div class="main-content" >
 		<div class="wrap-content container" id="container">
-		<!-- 	<section id="page-title">
-				<div class="row">
-					<div class="col-sm-8">
-						<h1 class="mainTitle">Dashboard</h1>
-						<span class="mainDescription">Ini untuk halaman dashboard dalam project website SERA. </span>
-					</div>
-					<ol class="breadcrumb">
-						<li class="">
-							<span>Dashboard</span>
-						</li>
-						<li class="active">
-							<span>Dashboard</span>
-						</li>
-					</ol>
-				</div>
-			</section> -->
 
- 

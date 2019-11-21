@@ -42,7 +42,7 @@ class Menu_detail extends CI_Controller {
 		$data = array(
 			'listLanguage' 	=> $this->Language_model->listLanguage(array('status' => 1)),
 			'listData' 		=> $this->Menu_detail_model->listMenuDetail(),
-			'title'			=> 'Menu Detail'
+			'title'			=> 'Menu Detail',
 			);
 		$this->load->view('front/kepalaadmin',$data);
 		$this->load->view('front/sidebaradmin');
@@ -72,7 +72,7 @@ class Menu_detail extends CI_Controller {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$this->session->set_flashdata('itemFlashData','insertGagal');
 			
-			$this->load->view('front/kepalaadmin');
+			$this->load->view('front/kepalaadmin',$data);
 			$this->load->view('front/sidebaradmin');
 			$this->load->view('front/subkepalaadmin');
 			$this->load->view('Menu_detail/input',$data);
@@ -143,7 +143,7 @@ class Menu_detail extends CI_Controller {
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$this->session->set_flashdata('itemFlashData','insertGagal');
 			
-			$this->load->view('front/kepalaadmin');
+			$this->load->view('front/kepalaadmin',$data);
 			$this->load->view('front/sidebaradmin');
 			$this->load->view('front/subkepalaadmin');
 			$this->load->view('Menu_detail/edit',$data);

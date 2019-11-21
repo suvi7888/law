@@ -166,15 +166,8 @@ c.nama_menu, d.nama_menu_detail, d.link_menu_detail, d.active*/
 
 public function cekHak($groupid='', $uri = '')
 {
-	/*
- $q = $this->db->query("SELECT b.*, c.* from hakakses a
-   inner join master_menu_admin b on a.id_menu = b.id_menu
-   inner join master_menu_detail_admin c on a.id_menu_detail = c.id_menu_detail
-   where a.id_group = '$groupid' and link_menu_detail like '%$uri%'");
 
- return $q->row();
-*/
-  $d = $this->db->query("SELECT * from users_groups where user_id = '$groupid' ")->row();
+    $d = $this->db->query("SELECT * from users_groups where user_id = '$groupid' ")->row();
     $group = $d->group_id;
 
     $q = $this->db->query("SELECT b.*, c.* from hakakses a
@@ -184,7 +177,7 @@ public function cekHak($groupid='', $uri = '')
      where a.id_group = '$group' and link_menu_detail like '%$uri%'");
 
     return $q->row();
-	
+
 }
 
 

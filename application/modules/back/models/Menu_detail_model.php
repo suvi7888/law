@@ -3,7 +3,7 @@
 class Menu_detail_model extends CI_Model{
 	
 	function listMenuDetail(){
-		$sql = "SELECT * FROM view_menu_detail_dev ORDER BY menu_detail_id";
+		$sql = "SELECT * FROM view_menu_detail ORDER BY menu_detail_id";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -33,7 +33,7 @@ class Menu_detail_model extends CI_Model{
 ####################################################
 	// permainan untuk data tables.
     // dimulai dari sini
-    var $table          = 'view_menu_detail_dev';
+    var $table          = 'view_menu_detail';
     var $column_order   = array('menu_detail_id', 'menuName', 'menuDetailName', 'title', 'position', 'status', 'create_date', 'namadepan1', 'namabelakang1', 'update_date', 'namadepan2', 'namabelakang2',); //set column field database for datatable orderable
     var $column_search  = array('menu_detail_id', 'menuName', 'menuDetailName', 'title', 'position', 'status', 'create_date', 'namadepan1', 'namabelakang1', 'update_date', 'namadepan2', 'namabelakang2',); //set column field database for datatable orderable
     var $order          = array('menu_detail_id' => 'asc'); // default order 

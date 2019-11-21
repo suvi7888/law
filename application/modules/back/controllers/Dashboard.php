@@ -28,10 +28,10 @@ class Dashboard extends CI_Controller {
 	{ 
 		$data = array(
 			'title' => 'Dashboard Admin - Sera CMS',
-			'jenis' => 'Dashboard'
-			 );
+			'jenis' => 'Dashboard',
+			);
 
-		
+		// echo 'masuk sini';
 		$this->load->view('front/kepalaadmin',$data);
 		$this->load->view('front/sidebaradmin',$data);
 		$this->load->view('front/subkepalaadmin',$data);
