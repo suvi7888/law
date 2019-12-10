@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Single_page extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -9,11 +9,16 @@ class Welcome extends CI_Controller {
 		$this->load->model('back/Menu_detail_model','Menu_detail_model');
 	}
 	
-	
 	public function index()
 	{
-		$this->load->view('template');
+    $menuId = 1;
+    $getContent = $this->getContent($menuId);
+    $data['arrGroup'][$menuId] = @$getContent[0];
+    $data['content'][$menuId] = @$getContent[1];
+    
+		$this->load->view('single_page', $data);
 	}
+  
   private function getContent($menuId){
     $arrGroup = [];
     $content = [];
@@ -26,26 +31,4 @@ class Welcome extends CI_Controller {
     return [$arrGroup, $content];
   }
   
-  
-	function _remap($method){
-		if ($method == 'index') { 
-			$page = 'home'; 
-			$menuId = 1;
-			$getContent = $this->getContent($menuId);
-			$data['arrGroup'] = @$getContent[0];
-			$data['content'] = @$getContent[1];
-		}
-    else if ($method == 'about') { 
-			$page = 'about'; 
-			$menuId = 2;
-			$getContent = $this->getContent($menuId);
-			$data['arrGroup'] = @$getContent[0];
-			$data['content'] = @$getContent[1];
-		}
-		else 
-			$page = $this->uri->segment(1);
-		
-		$data['page'] = $page;
-		$this->load->view('template', $data);
-	}
 }

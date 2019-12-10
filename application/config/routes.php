@@ -54,5 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['dapur']	 						= 'back/auth';
+$route['single_page']	 				= 'single_page';
 
 $route['(:any)'] 			= 'welcome/$1';

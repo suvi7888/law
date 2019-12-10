@@ -72,7 +72,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-4 mb-5">
-            <h3>About Us</h3>
+            <h3>Tentang Kami</h3>
             <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. .</p>
             <ul class="list-unstyled footer-link d-flex footer-social">
               <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
@@ -83,17 +83,22 @@
 
           </div>
           <div class="col-md-5 mb-5 pl-md-5">
-            <h3>Contact Info</h3>
+            <h3>Informasi Kontak</h3>
             <ul class="list-unstyled footer-link">
               <li class="d-block">
                 <span class="d-block">Address:</span>
-                <span >34 Street Name, City Name Here, United States</span></li>
-              <li class="d-block"><span class="d-block">Telephone:</span><span >+1 242 4942 290</span></li>
-              <li class="d-block"><span class="d-block">Email:</span><span >info@yourdomain.com</span></li>
+                <span >Grand Slipi Tower<br>
+                  Lantai 5 Unit e dan f<br>
+                  Jl. Letjen S. Parman, Kav 22- 24<br>
+                  Palmerah, Jakarta Barat 11480
+                </span>
+              </li>
+              <li class="d-block"><span class="d-block">Telephone:</span><span >+62 816 1920 335</span></li>
+              <li class="d-block"><span class="d-block">Email:</span><span >info@kantorpengacarajakarta.com</span></li>
             </ul>
           </div>
           <div class="col-md-3 mb-5">
-            <h3>Quick Links</h3>
+            <h3>Akses Cepat</h3>
             <ul class="list-unstyled footer-link">
               <li><a href="#">About</a></li>
               <li><a href="#">Terms of Use</a></li>
