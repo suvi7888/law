@@ -26,6 +26,78 @@
 
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="assets/single_page/css/creative.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="<?php echo base_url('assets'); ?>/fonts/ionicons/css/ionicons.min.css">
+  
+<style>
+
+.block-33 {
+  background: #eee;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px; }
+  .block-33 .vcard .image {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 60px;
+    flex: 0 0 60px;
+    margin-right: 20px; }
+    .block-33 .vcard .image img {
+      max-width: 100%;
+      border-radius: 50%; }
+  .block-33 .vcard .name-text .heading {
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 300; }
+  .block-33 .vcard .name-text .meta {
+    color: #a6a6a6;
+    display: block; }
+  .block-33 .text blockquote {
+    padding: 0;
+    margin-bottom: 0;
+    border: none !important;
+    font-size: 16px; }
+    .block-33 .text blockquote p:last-child {
+      margin-bottom: 0; }
+
+.media {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start; }
+
+.media-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+.blog .media h3 {
+  font-size: 20px;
+  margin-bottom: 10px; }
+
+.blog .media .post-meta {
+  font-size: 14px;
+  letter-spacing: .2em;
+  text-transform: uppercase; }
+
+.blog .media > a {
+  width: 40%; }
+  @media (max-width: 767.98px) {
+    .blog .media > a {
+      width: 100%;
+      margin-bottom: 30px; } }
+      
+.post-meta {
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #b3b3b3;
+  letter-spacing: .2em;
+  display: block;
+  margin-bottom: 10px; }
+</style>
 
 </head>
 
@@ -148,7 +220,72 @@
           <h2 class="mt-5">Client Testimony</h2>
           <hr class="divider my-4">
           <div class="text-justify">
-            Client Testimony all
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                
+                <?php 
+                $menuId = 1;
+                $group = 5;
+                foreach($content[$menuId][$group] as $row) { ?>
+                <div class="carousel-item active">
+                  <div class="block-33 h-100">
+                    <div class="vcard d-flex mb-3">
+                      <div class="image align-self-center"><img src="<?php echo base_url('uploads/contents/'.$row['photo']); ?>" alt="<?php echo $row['title']; ?>"></div>
+                      <div class="name-text align-self-center">
+                        <h2 class="heading"><?php echo $row['title']; ?></h2>
+                        <span class="meta"><?php echo $row['subtitle']; ?></span>
+                      </div>
+                    </div>
+                    <div class="text">
+                      <blockquote>
+                        <?php echo $row['content']; ?>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+                <?php } ?>
+                <div class="carousel-item">
+                  <div class="block-33 h-100">
+                    <div class="vcard d-flex mb-3">
+                      <div class="image align-self-center"><img src="<?php echo base_url('assets'); ?>/images/person_2.jpg" alt="Person here"></div>
+                      <div class="name-text align-self-center">
+                        <h2 class="heading">John Smith</h2>
+                        <span class="meta">Companies Client</span>
+                      </div>
+                    </div>
+                    <div class="text">
+                      <blockquote>
+                        <p>&rdquo; The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. &ldquo;</p>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="carousel-item">
+                  <div class="block-33 h-100">
+                    <div class="vcard d-flex mb-3">
+                      <div class="image align-self-center"><img src="<?php echo base_url('assets'); ?>/images/person_3.jpg" alt="Person here"></div>
+                      <div class="name-text align-self-center">
+                        <h2 class="heading">John Smith</h2>
+                        <span class="meta">Companies Client</span>
+                      </div>
+                    </div>
+                    <div class="text">
+                      <blockquote>
+                        <p>&rdquo; The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. &ldquo;</p>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev" style="color: #000">
+                <span class="ion-chevron-left"></span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next" style="color: #000">
+                <span class="ion-chevron-right"></span>
+              </a>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -228,13 +365,13 @@
   </section>
 
   <!-- artikel Section -->
-  <section class="page-section bg-dark text-white" id="artikel">
+  <section class="page-section bg-dark text-white blog" id="artikel">
     <div class="container">
       <div class="row justify-content-center">
       <div class="col-lg-12 text-center">
         <h2 class="mt-0">Artikel Hukum</h2>
         <hr class="divider my-4">
-        <div class="row">
+        <div class="row text-left">
           <div class="col-md-6">
 
             <div class="media mb-4 d-md-flex d-block element-animate">
@@ -285,14 +422,6 @@
     </div>
   </section>
 
-  <!-- Call to Action Section -->
-  <section class="page-section bg-dark text-white">
-    <div class="container text-center">
-      <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-      <a class="btn btn-light btn-xl" href="https://startbootstrap.com/themes/creative/">Download Now!</a>
-    </div>
-  </section>
-
   <!-- Contact Section -->
   <section class="page-section" id="contact">
     <div class="container">
@@ -304,13 +433,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+        <div class="col-lg-8 ml-auto text-center mb-8 mb-lg-0">
+          <iframe width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13339.886990568344!2d106.84586297271818!3d-6.267395639771943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3b2b5f25827%3A0xfb448f6e57a7a372!2sKalibata%20City%2C%20Jl.%20Raya%20Kalibata%20No.1%2C%20RT.9%2FRW.4%2C%20Rawajati%2C%20Pancoran%2C%20South%20Jakarta%20City%2C%20Jakarta%2012750!5e0!3m2!1sen!2sid!4v1577976269833!5m2!1sen!2sid"></iframe>
+        </div>
+        <div class="col-lg-4 ml-auto text-center mb-4 mb-lg-0">
           <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
           <div>+1 (202) 555-0149</div>
-        </div>
-        <div class="col-lg-4 mr-auto text-center">
+          <br>
           <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-          <!-- Make sure to change the email address in anchor text AND the link below! -->
           <a class="d-block" href="mailto:contact@yourwebsite.com">contact@yourwebsite.com</a>
         </div>
       </div>
